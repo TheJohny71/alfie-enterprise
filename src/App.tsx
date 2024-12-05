@@ -1,8 +1,5 @@
-import React from 'react';
 import WelcomePage from './components/WelcomePage';
 
-function App() {
+export default function App() {
   return <WelcomePage />;
 }
-
-export default App;
