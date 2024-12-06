@@ -1,14 +1,10 @@
 import React from 'react';
-import Button from '@/components/ui/Button'; // Changed the path to match the existing Button.tsx file
-import LoadingState from '@/components/ui/LoadingState'; // Assuming this component is used and exists
+import Button from '@/components/ui/Button';
+import LoadingState from '@/components/ui/LoadingState';
 
-// If you had references to Card, they have been removed. If you need a Card component, create card.tsx in ui folder and re-add import.
-// import Card from '@/components/ui/card'; // Removed since card does not exist
+// Removed any import or usage of "card" since no card file exists
 
 const WelcomePage: React.FC = () => {
-  // Remove or adjust any usage of Card below.
-  // If there were lines like <Card /> they should be removed or replaced.
-
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-3xl font-bold mb-4">Welcome to Alfie Enterprise</h1>
