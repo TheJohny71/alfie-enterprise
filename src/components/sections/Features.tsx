@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const Features: React.FC = () => {
   const features = [
@@ -23,16 +22,13 @@ const Features: React.FC = () => {
         <h2 className="text-3xl font-semibold text-center mb-12">Features</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <motion.div
+            <div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
               className="bg-white p-6 rounded-lg shadow-sm"
             >
               <h3 className="text-xl font-medium mb-3">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
