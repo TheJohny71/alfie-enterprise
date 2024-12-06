@@ -31,8 +31,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          npm install -g npm@latest
-          npm ci
+          npm install
         
       - name: Build
         run: npm run build
