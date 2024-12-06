@@ -10,54 +10,25 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '20'
-          cache: 'npm'
           
-      - name: Setup npmrc
+      - name: Clean Install
         run: |
+          echo "registry=https://registry.npmjs.org/" > .npmrc
           echo "legacy-peer-deps=true" >> .npmrc
-          echo "strict-peer-dependencies=false" >> .npmrc
-          echo "auto-install-peers=true" >> .npmrc
-          
-      - name: Clear npm cache
-        run: npm cache clean --force
-        
-      - name: Remove existing node_modules and lock file
-        run: |
-          rm -rf node_modules
-          rm -f package-lock.json
-          
-      - name: Install Dependencies
-        run: |
-          npm install
-          npm ls
-        env:
-          NODE_ENV: development
-          CI: true
+          rm -rf node_modules package-lock.json
+          npm install --no-package-lock
           
       - name: Build
-        run: |
-          npm run build
-        env:
-          CI: true
-          NODE_OPTIONS: --max_old_space_size=4096
-      
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
+        run: npm run build
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
@@ -65,12 +36,11 @@ jobs:
           path: './dist'
 
   deploy:
+    needs: build
+    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Deploy to GitHub Pages
+      - uses: actions/deploy-pages@v2
         id: deployment
-        uses: actions/deploy-pages@v2
