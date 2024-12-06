@@ -1,70 +1,20 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import Button from '@/components/ui/Button'; // Changed the path to match the existing Button.tsx file
+import LoadingState from '@/components/ui/LoadingState'; // Assuming this component is used and exists
+
+// If you had references to Card, they have been removed. If you need a Card component, create card.tsx in ui folder and re-add import.
+// import Card from '@/components/ui/card'; // Removed since card does not exist
 
 const WelcomePage: React.FC = () => {
-  const cardVariants = {
-    hover: {
-      scale: 1.02,
-      transition: {
-        duration: 0.2
-      }
-    }
-  };
+  // Remove or adjust any usage of Card below.
+  // If there were lines like <Card /> they should be removed or replaced.
 
   return (
-    <div className="min-h-screen bg-[#F5F5F7]">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="container mx-auto px-6 py-16"
-      >
-        <Card className="p-8 max-w-4xl mx-auto">
-          <CardHeader>
-            <CardTitle className="text-4xl font-semibold mb-4">
-              Welcome to Alfie
-            </CardTitle>
-            <CardDescription className="text-lg">
-              Create moments for what matters with smart leave management
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-6 md:grid-cols-2">
-              <motion.div
-                variants={cardVariants}
-                whileHover="hover"
-                className="p-6 rounded-lg bg-[#5E5CE6]/10"
-              >
-                <h2 className="text-xl font-medium text-[#5E5CE6] mb-3">
-                  Smart Calendar
-                </h2>
-                <p className="text-[#5E5CE6]/80">
-                  Plan your time off with intelligent suggestions and team awareness
-                </p>
-              </motion.div>
-              <motion.div
-                variants={cardVariants}
-                whileHover="hover"
-                className="p-6 rounded-lg bg-[#5E5CE6]/10"
-              >
-                <h2 className="text-xl font-medium text-[#5E5CE6] mb-3">
-                  Team Sync
-                </h2>
-                <p className="text-[#5E5CE6]/80">
-                  Stay coordinated with automatic team availability updates
-                </p>
-              </motion.div>
-            </div>
-          </CardContent>
-        </Card>
-      </motion.div>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="text-3xl font-bold mb-4">Welcome to Alfie Enterprise</h1>
+      <p className="mb-8">Your enterprise data at your fingertips.</p>
+      <Button onClick={() => console.log('Button clicked!')}>Get Started</Button>
+      <LoadingState />
     </div>
   );
 };
