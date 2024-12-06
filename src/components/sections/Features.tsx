@@ -24,7 +24,7 @@ const Features: React.FC = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-lg shadow-sm"
+              className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <h3 className="text-xl font-medium mb-3">{feature.title}</h3>
               <p className="text-gray-600">{feature.description}</p>
