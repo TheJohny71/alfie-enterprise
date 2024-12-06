@@ -1,67 +1,43 @@
+import React from 'react';
 import { motion } from 'framer-motion';
-import { CalendarDays, Users, Building2, ArrowRight } from 'lucide-react';
-import { ReactNode } from 'react';
 
-interface FeatureCardProps {
-  icon: typeof CalendarDays;
-  title: string;
-  description: string;
-}
+const Features: React.FC = () => {
+  const features = [
+    {
+      title: 'Smart Calendar',
+      description: 'Intelligent leave management with team awareness'
+    },
+    {
+      title: 'Team Sync',
+      description: 'Seamless coordination with your team members'
+    },
+    {
+      title: 'Quick Approval',
+      description: 'Streamlined approval process for faster responses'
+    }
+  ];
 
-const features = [
-  {
-    icon: CalendarDays,
-    title: "Smart Calendar",
-    description: "Intelligent leave planning with team awareness and conflict prevention."
-  },
-  {
-    icon: Users,
-    title: "Team Sync",
-    description: "Seamless coordination with automatic availability updates and coverage insights."
-  },
-  {
-    icon: Building2,
-    title: "Enterprise Ready",
-    description: "Built for scale with SSO, advanced permissions, and comprehensive audit logs."
-  }
-];
-
-function FeatureCard({ icon: Icon, title, description }: FeatureCardProps) {
   return (
-    <motion.div 
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className="group relative p-8 backdrop-blur-sm bg-white/60 rounded-2xl border border-gray-200/50 transition-all duration-200"
-    >
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/5 to-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-      <Icon className="w-12 h-12 text-primary mb-4" />
-      <h3 className="text-xl font-display font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
-      <motion.div 
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        className="absolute bottom-4 right-4"
-      >
-        <ArrowRight className="w-5 h-5 text-primary" />
-      </motion.div>
-    </motion.div>
+    <section className="py-12 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-semibold text-center mb-12">Features</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+              className="bg-white p-6 rounded-lg shadow-sm"
+            >
+              <h3 className="text-xl font-medium mb-3">{feature.title}</h3>
+              <p className="text-gray-600">{feature.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
-}
+};
 
-export default function Features() {
-  return (
-    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      {features.map((feature, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 * index }}
-        >
-          <FeatureCard {...feature} />
-        </motion.div>
-      ))}
-    </div>
-  );
-}
+export default Features;
