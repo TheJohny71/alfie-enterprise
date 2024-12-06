@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/ui/Button'; // Updated import: Button.tsx has a capital 'B'
+import Button from '@/components/ui/Button'; // Capital B in both the import path and file name
 
 const Header: React.FC = () => {
   return (
