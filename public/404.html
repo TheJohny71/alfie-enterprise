@@ -1,37 +1,39 @@
-// public/404.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found - Alfie Enterprise</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <title>404 - Page Not Found</title>
     <style>
         body {
             margin: 0;
-            font-family: -apple-system, system-ui, sans-serif;
-            background: #F5F5F7;
-            color: #1D1D1F;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            background-color: #F5F5F7;
         }
         .container {
             text-align: center;
-            padding: 2rem;
+            padding: 20px;
         }
         h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            color: #1D1D1F;
+            font-size: 24px;
+            margin-bottom: 16px;
+            font-weight: 500;
         }
         p {
             color: #86868B;
-            margin-bottom: 2rem;
+            margin-bottom: 24px;
+            font-size: 16px;
         }
         a {
             color: #5E5CE6;
             text-decoration: none;
+            font-size: 16px;
         }
         a:hover {
             text-decoration: underline;
@@ -40,41 +42,9 @@
 </head>
 <body>
     <div class="container">
-        <h1>404 - Page Not Found</h1>
+        <h1>Page Not Found</h1>
         <p>The page you're looking for doesn't exist.</p>
-        <a href="/">Return to Homepage</a>
+        <a href="/">Return to Home</a>
     </div>
 </body>
 </html>
-
-// public/favicon.svg
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <rect width="100" height="100" rx="20" fill="#5E5CE6"/>
-  <path d="M30 50 L45 65 L70 35" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-// .github/workflows/deploy.yml
-name: Deploy
-on:
-  push:
-    branches: [ main ]
-permissions:
-  contents: write
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
