@@ -1,36 +1,21 @@
+// src/components/ui/Button.tsx
 import React from 'react';
-import { cn } from '@/lib/utils';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
+interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
   children,
-  className,
-  variant = 'primary',
-  size = 'md',
-  ...props
+  onClick,
+  className = '',
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors';
-  
-  const variants = {
-    primary: 'bg-purple-600 text-white hover:bg-purple-700',
-    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',
-    outline: 'border-2 border-purple-600 text-purple-600 hover:bg-purple-50'
-  };
-
-  const sizes = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-base',
-    lg: 'px-6 py-3 text-lg'
-  };
-
   return (
     <button
-      className={cn(baseStyles, variants[variant], sizes[size], className)}
-      {...props}
+      onClick={onClick}
+      className={`bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors ${className}`}
     >
       {children}
     </button>
