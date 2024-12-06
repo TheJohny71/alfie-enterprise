@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/ui/Button'; // Updated import for correct case
+import Button from '@/components/ui/Button'; // Capital B
 
 const Hero: React.FC = () => {
   return (
