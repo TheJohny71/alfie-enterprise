@@ -2,9 +2,9 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/',  // Updated from '/alfie-enterprise/'
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -16,10 +16,14 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom'],
-          utils: ['lodash']
-        }
-      }
-    }
-  }
+          'react-vendor': ['react', 'react-dom'],
+          'ui-vendor': ['lucide-react', 'recharts'],
+        },
+      },
+    },
+  },
+  server: {
+    port: 3000,
+    open: true,
+  },
 })
