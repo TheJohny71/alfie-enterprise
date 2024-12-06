@@ -1,38 +1,49 @@
+// src/components/sections/Features.tsx
 import React from 'react';
+import Button from '@/components/ui/Button';
 
 const Features: React.FC = () => {
   const features = [
     {
       title: 'Smart Calendar',
-      description: 'Intelligent leave management with team awareness'
+      description: 'AI-powered scheduling and conflict prevention'
     },
     {
       title: 'Team Sync',
-      description: 'Seamless coordination with your team members'
+      description: 'Real-time availability and coordination'
     },
     {
-      title: 'Quick Approval',
-      description: 'Streamlined approval process for faster responses'
+      title: 'Global Ready',
+      description: 'Built for international teams'
     }
   ];
 
   return (
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-semibold text-center mb-12">Features</h2>
+    <div className="py-12">
+      <div className="max-w-7xl mx-auto px-4">
+        <h2 className="text-2xl font-bold text-center mb-8">
+          Features
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
+            <div 
+              key={index} 
+              className="p-6 bg-white rounded-lg shadow-sm"
             >
-              <h3 className="text-xl font-medium mb-3">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="text-lg font-semibold mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-gray-600 mb-4">
+                {feature.description}
+              </p>
+              <Button onClick={() => console.log(`Learn more about ${feature.title}`)}>
+                Learn More
+              </Button>
             </div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
