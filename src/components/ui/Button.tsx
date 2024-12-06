@@ -1,37 +1,42 @@
-import { motion } from 'framer-motion';
-import { ButtonHTMLAttributes } from 'react';
+import React from 'react';
+import { motion, HTMLMotionProps } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary';
+interface ButtonProps extends HTMLMotionProps<'button'> {
+  variant?: 'primary' | 'secondary' | 'outline';
   size?: 'sm' | 'md' | 'lg';
 }
 
-export default function Button({ 
-  children, 
-  variant = 'primary', 
-  size = 'md', 
-  className = '',
-  ...props 
-}: ButtonProps) {
-  const baseStyles = "rounded-lg font-medium transition-colors";
+const Button: React.FC<ButtonProps> = ({
+  children,
+  className,
+  variant = 'primary',
+  size = 'md',
+  ...props
+}) => {
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-colors';
+  
   const variants = {
-    primary: "bg-primary text-white hover:bg-primary/90 shadow-lg hover:shadow-primary/25",
-    secondary: "bg-white text-gray-900 border border-gray-200 hover:bg-gray-50"
+    primary: 'bg-purple-600 text-white hover:bg-purple-700',
+    secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200',
+    outline: 'border-2 border-purple-600 text-purple-600 hover:bg-purple-50'
   };
+
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3",
-    lg: "px-8 py-4 text-lg"
+    sm: 'px-3 py-1.5 text-sm',
+    md: 'px-4 py-2 text-base',
+    lg: 'px-6 py-3 text-lg'
   };
 
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={cn(baseStyles, variants[variant], sizes[size], className)}
+      whileTap={{ scale: 0.95 }}
       {...props}
     >
       {children}
     </motion.button>
   );
-}
+};
+
+export default Button;
