@@ -1,22 +1,13 @@
-// src/components/ui/Button.tsx
-import React from 'react';
+// If React is not needed as a named import, omit it. Otherwise:
+// import React from 'react';
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  className = '',
-}) => {
+const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
   return (
-    <button
-      onClick={onClick}
-      className={`bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90 transition-colors ${className}`}
-    >
+    <button className="p-2 bg-primary text-white rounded" {...props}>
       {children}
     </button>
   );
