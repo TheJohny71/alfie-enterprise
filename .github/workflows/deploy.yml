@@ -37,8 +37,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      # If needed, you can include:
-      # url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
