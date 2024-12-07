@@ -2,8 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  base: '/alfie-enterprise/', // Important for GitHub Pages subpath
   plugins: [react()],
   resolve: {
     alias: {
@@ -12,6 +12,8 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
+      // If you have externals like recharts, keep these lines
+      // Otherwise, you can remove this entire rollupOptions block
       external: ['recharts'],
       output: {
         globals: {
@@ -28,3 +30,4 @@ export default defineConfig({
     include: ['recharts']
   }
 })
+
