@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '@/components/ui/Button'; // Capital B in both the import path and file name
+import Button from '@/components/ui/Button'; // Capitalized 'B' to match Button.tsx
 
 const Header: React.FC = () => {
   return (
