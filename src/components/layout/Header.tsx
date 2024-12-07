@@ -1,11 +1,12 @@
-import React from 'react';
-import Button from '@/components/ui/Button'; // Capitalized 'B' to match Button.tsx
+import Button from '@/components/ui/Button';
 
 const Header: React.FC = () => {
   return (
     <header className="p-4 shadow-md flex items-center justify-between">
       <h1 className="text-xl font-bold">Alfie Enterprise</h1>
-      <Button onClick={() => console.log('Header button clicked!')}>Log In</Button>
+      <Button onClick={() => console.log('Header button clicked!')}>
+        Log In
+      </Button>
     </header>
   );
 };
