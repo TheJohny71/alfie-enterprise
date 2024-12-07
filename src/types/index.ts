@@ -1,20 +1,10 @@
-export interface NavItem {
-  title: string;
-  href: string;
+// src/types/index.ts
+export interface ButtonProps {
+  children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
 }
 
-export interface Feature {
-  title: string;
-  description: string;
-  icon: any; // You might want to make this more specific based on your icon library
-}
-
-export interface Testimonial {
-  content: string;
-  author: {
-    name: string;
-    role: string;
-    company: string;
-    image: string;
-  };
+export interface WelcomePageProps {
+  // Currently empty as WelcomePage doesn't accept props
 }
