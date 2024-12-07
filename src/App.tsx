@@ -1,5 +1,7 @@
-import React from 'react';
-import WelcomePage from '@/components/ui/WelcomePage'; // Updated import path
+// Removed `import React from 'react';` since it's not needed if we never refer to React directly.
+// With the modern JSX transform, this is no longer required for JSX files.
+
+import WelcomePage from '@/components/ui/WelcomePage';
 
 function App() {
   return <WelcomePage />;
