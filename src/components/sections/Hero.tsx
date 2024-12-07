@@ -1,5 +1,4 @@
-import React from 'react';
-import Button from '@/components/ui/Button'; // Ensure capital 'B'
+import Button from '@/components/ui/Button';
 
 const Hero: React.FC = () => {
   return (
