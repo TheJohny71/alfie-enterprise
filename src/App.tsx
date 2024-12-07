@@ -1,5 +1,5 @@
-// Removed `import React from 'react';` since it's not needed if we never refer to React directly.
-// With the modern JSX transform, this is no longer required for JSX files.
+// No need to import React if never directly referenced, thanks to new JSX transform.
+// If you have React 17+ and are using react-jsx runtime, omit `import React from 'react';`
 
 import WelcomePage from '@/components/ui/WelcomePage';
 
