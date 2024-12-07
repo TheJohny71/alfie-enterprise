@@ -1,9 +1,8 @@
-// src/App.tsx
 import React from 'react';
-import WelcomePage from '@/components/WelcomePage';
+import WelcomePage from '@/components/ui/WelcomePage'; // Updated import path
 
-const App: React.FC = () => {
+function App() {
   return <WelcomePage />;
-};
+}
 
 export default App;
