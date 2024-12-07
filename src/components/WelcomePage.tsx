@@ -1,8 +1,6 @@
 import React from 'react';
-import Button from '@/components/ui/Button';
-import LoadingState from '@/components/ui/LoadingState';
-
-// Removed any import or usage of "card" since no card file exists
+import Button from '@/components/ui/Button'; // Ensure capital 'B'
+import LoadingState from '@/components/ui/LoadingState'; // Ensure exact name matches LoadingState.tsx
 
 const WelcomePage: React.FC = () => {
   return (
