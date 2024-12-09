@@ -1,13 +1,12 @@
-// If React is not needed as a named import, omit it. Otherwise:
-// import React from 'react';
+import { FC } from 'react';
+import { ButtonProps } from '@/types';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  children: React.ReactNode;
-}
-
-const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
+const Button: FC<ButtonProps> = ({ children, onClick, className }) => {
   return (
-    <button className="p-2 bg-primary text-white rounded" {...props}>
+    <button 
+      onClick={onClick}
+      className={`px-4 py-2 rounded bg-purple-600 text-white ${className || ''}`}
+    >
       {children}
     </button>
   );
