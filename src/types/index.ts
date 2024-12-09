@@ -1,19 +1,11 @@
-import { FC, ReactNode } from 'react';
-
-export interface ButtonProps {
-  children: ReactNode;
-  onClick?: () => void;
-  className?: string;
-}
-
-export interface WelcomePageProps {
-  children?: ReactNode;
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'primary' | 'secondary' | 'tertiary';
+  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
 }
 
 export interface LoadingStateProps {
-  message?: string;
-}
-
-export interface HeaderProps {
-  title?: string;
+  size?: 'sm' | 'md' | 'lg';
+  color?: string;
+  className?: string;
 }
