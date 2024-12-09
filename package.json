@@ -2,13 +2,13 @@
   "name": "alfie-enterprise",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx",
     "preview": "vite preview"
   },
-  "packageManager": "npm@10.2.4",
   "dependencies": {
     "@types/node": "20.10.5",
     "react": "18.2.0",
