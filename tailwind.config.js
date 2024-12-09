@@ -12,11 +12,11 @@ export default {
         gray: {
           100: '#98989D',
           200: '#636366',
-          300: '#48484A'
+          300: '#48484A',
         },
         success: '#34C759',
         warning: '#FF9F0A',
-        error: '#FF3B30'
+        error: '#FF3B30',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
@@ -25,4 +25,4 @@ export default {
     },
   },
   plugins: [],
-}
+};
