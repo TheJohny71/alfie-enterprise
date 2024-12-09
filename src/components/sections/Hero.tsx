@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button';
+import { Button } from '../ui/Button';
 
 const Hero: React.FC = () => {
   return (
