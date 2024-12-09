@@ -1,10 +1,19 @@
-// src/types/index.ts
+import { FC, ReactNode } from 'react';
+
 export interface ButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
   onClick?: () => void;
   className?: string;
 }
 
 export interface WelcomePageProps {
-  // Currently empty as WelcomePage doesn't accept props
+  children?: ReactNode;
+}
+
+export interface LoadingStateProps {
+  message?: string;
+}
+
+export interface HeaderProps {
+  title?: string;
 }
