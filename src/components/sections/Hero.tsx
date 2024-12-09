@@ -1,14 +1,20 @@
-import { Button } from '../ui/Button';
+import React from 'react';
 
-const Hero: React.FC = () => {
+export const Hero: React.FC = () => {
   return (
-    <section className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h2 className="text-4xl font-bold mb-4">Supercharge Your Enterprise</h2>
-      <p className="mb-8">
-        Leveraging cutting-edge data analytics to drive actionable insights.
-      </p>
-      <Button onClick={() => console.log('Hero button clicked!')}>Learn More</Button>
-    </section>
+    <div className="bg-purple-600 text-white py-16">
+      <div className="max-w-7xl mx-auto px-6 text-center">
+        <h1 className="text-4xl font-semibold mb-4">
+          Create moments for what matters
+        </h1>
+        <h2 className="text-2xl font-normal mb-4">
+          Life's best stories happen off the clock
+        </h2>
+        <p className="text-xl opacity-90">
+          Plan smarter. Live fuller.
+        </p>
+      </div>
+    </div>
   );
 };
 
