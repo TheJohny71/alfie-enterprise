@@ -1,12 +1,24 @@
-import { FC } from 'react';
-import { LoadingStateProps } from '@/types';
+import { FC } from 'react'
+import { cn } from '@/lib/utils'
+import { LoadingStateProps } from '@/types'
 
-const LoadingState: FC<LoadingStateProps> = ({ message = 'Loading...' }) => {
+export const LoadingState: FC<LoadingStateProps> = ({
+  size = 'md',
+  color = 'primary',
+  className
+}) => {
   return (
-    <div className="flex items-center justify-center">
-      <span>{message}</span>
+    <div className={cn('flex items-center justify-center', className)}>
+      <div
+        className={cn(
+          'animate-spin rounded-full border-t-2 border-primary',
+          {
+            'h-4 w-4': size === 'sm',
+            'h-6 w-6': size === 'md',
+            'h-8 w-8': size === 'lg'
+          }
+        )}
+      />
     </div>
-  );
-};
-
-export default LoadingState;
+  )
+}
