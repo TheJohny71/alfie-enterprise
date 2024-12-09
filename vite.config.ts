@@ -1,4 +1,4 @@
-// vite.config.ts
+/vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
@@ -10,5 +10,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     }
   },
-  base: '/alfie/', // GitHub Pages base path
+  base: '/alfie/',
+  css: {
+    postcss: './postcss.config.cjs'
+  }
 })
