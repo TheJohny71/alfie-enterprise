@@ -3,30 +3,29 @@ import { Calendar, Globe, Users, Clock } from 'lucide-react';
 
 const WelcomePage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Refined Header */}
-      <header className="h-16 bg-white border-b border-gray-200/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-          {/* Enhanced Logo */}
-          <div className="flex items-center relative group">
-            <span className="text-2xl font-semibold text-purple-600 tracking-tight">
+    <div className="min-h-screen bg-white">
+      {/* Touch-optimized Header */}
+      <header className="h-16 bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+          {/* Logo - Touch friendly */}
+          <div className="flex items-center py-2">
+            <span className="text-2xl font-semibold text-purple-600 min-h-[44px] flex items-center">
               alfie
             </span>
-            <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-purple-600 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out" />
           </div>
 
-          {/* Refined Controls */}
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center gap-2 text-sm">
+          {/* Controls - Touch optimized */}
+          <div className="flex items-center space-x-2 sm:space-x-6">
+            <div className="hidden sm:flex items-center gap-2 min-h-[44px]">
               <Clock className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600 font-medium">3:42 PM</span>
+              <span className="text-gray-600">3:42 PM</span>
             </div>
-            <select className="text-sm bg-transparent border-0 text-gray-600 font-medium focus:ring-0 cursor-pointer hover:text-purple-600 transition-colors">
+            <select className="h-11 bg-transparent border-0 text-gray-600 focus:ring-0 cursor-pointer px-3 touch-manipulation">
               <option>Atlanta</option>
               <option>New York</option>
               <option>San Francisco</option>
             </select>
-            <select className="text-sm bg-transparent border-0 text-gray-600 font-medium focus:ring-0 cursor-pointer hover:text-purple-600 transition-colors">
+            <select className="h-11 bg-transparent border-0 text-gray-600 focus:ring-0 cursor-pointer px-3 touch-manipulation">
               <option>United States</option>
               <option>United Kingdom</option>
             </select>
@@ -34,31 +33,24 @@ const WelcomePage: React.FC = () => {
         </div>
       </header>
 
-      {/* Enhanced Hero Section */}
-      <div className="relative bg-purple-600 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 transform -skew-y-12 bg-white/20" />
-          <div className="absolute inset-0 transform skew-x-12 bg-white/10" />
-        </div>
-        
-        {/* Hero Content */}
-        <div className="relative max-w-7xl mx-auto px-6 py-24 text-center">
-          <h1 className="text-5xl font-semibold text-white mb-6 tracking-tight">
+      {/* Responsive Hero Section */}
+      <div className="bg-purple-600 pt-12 pb-32 sm:pt-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <h1 className="text-3xl sm:text-4xl font-semibold text-white mb-4 sm:mb-6">
             Create moments for what matters
           </h1>
-          <h2 className="text-2xl font-normal text-white/90 mb-6 tracking-wide">
+          <h2 className="text-xl sm:text-2xl text-white/90 mb-3 sm:mb-4">
             Life's best stories happen off the clock
           </h2>
-          <p className="text-xl text-white/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white/80">
             Plan smarter. Live fuller.
           </p>
         </div>
       </div>
 
-      {/* Enhanced Feature Grid */}
-      <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-10 pb-24">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Touch-optimized Features Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 -mt-24 pb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
           {[
             {
               icon: Calendar,
@@ -78,12 +70,12 @@ const WelcomePage: React.FC = () => {
           ].map((feature, index) => (
             <div 
               key={index}
-              className="group bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 p-8 transform hover:-translate-y-1"
+              className="group bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300 min-h-[160px] touch-manipulation"
             >
-              <div className="w-14 h-14 bg-purple-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-100 transition-colors duration-300">
-                <feature.icon className="w-7 h-7 text-purple-600 group-hover:scale-110 transition-transform duration-300" />
+              <div className="w-11 h-11 sm:w-12 sm:h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4 sm:mb-6 group-hover:bg-purple-200 transition-colors duration-300">
+                <feature.icon className="w-6 h-6 text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 sm:mb-3">
                 {feature.title}
               </h3>
               <p className="text-gray-600 leading-relaxed">
