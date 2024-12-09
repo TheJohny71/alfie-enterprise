@@ -5,10 +5,13 @@ import path from 'path'
 export default defineConfig({
   plugins: [react()],
   build: {
-    commonjsOptions: {
-      transformMixedEsModules: true
-    },
-    sourcemap: true
+    outDir: 'dist',
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   },
   resolve: {
     alias: {
