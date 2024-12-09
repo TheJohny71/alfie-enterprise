@@ -1,8 +1,12 @@
-// import React from 'react'; if needed
-// If not using React directly, this can be omitted. Just ensure you use JSX transform.
+import { FC } from 'react';
+import { LoadingStateProps } from '@/types';
 
-const LoadingState: React.FC = () => {
-  return <div>Loading...</div>;
+const LoadingState: FC<LoadingStateProps> = ({ message = 'Loading...' }) => {
+  return (
+    <div className="flex items-center justify-center">
+      <span>{message}</span>
+    </div>
+  );
 };
 
 export default LoadingState;
