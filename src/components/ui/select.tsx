@@ -1,70 +1,89 @@
-import React from 'react';
-import { Alert } from '@/components/ui/alert';
+import { forwardRef } from 'react'
+import { cn } from '@/lib/utils'
 
-export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   value: string;
   onValueChange: (value: string) => void;
 }
 
-export interface SelectTriggerProps {
-  className?: string;
-  children?: React.ReactNode;
-}
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(
+  ({ value, onValueChange, children, className, ...props }, ref) => {
+    return (
+      <select 
+        ref={ref}
+        value={value}
+        onChange={(e) => onValueChange(e.target.value)}
+        className={cn('w-full rounded-md', className)}
+        {...props}
+      >
+        {children}
+      </select>
+    );
+  }
+)
 
-export interface SelectContentProps {
-  className?: string;
-  children?: React.ReactNode;
-}
-
-export interface SelectItemProps {
-  value: string;
-  children?: React.ReactNode;
-}
-
-const Select: React.FC<SelectProps> = ({ value, onValueChange, children, ...props }) => {
+export const SelectTrigger = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...props }, ref) => {
   return (
-    <select 
-      value={value}
-      onChange={(e) => onValueChange(e.target.value)}
+    <div
+      ref={ref}
+      className={cn('relative', className)}
       {...props}
     >
       {children}
-    </select>
+    </div>
   );
-};
+})
 
-const SelectTrigger: React.FC<SelectTriggerProps> = ({ className, children }) => {
+export const SelectContent = forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, children, ...props }, ref) => {
   return (
-    <div className={className}>
+    <div
+      ref={ref}
+      className={cn('absolute w-full mt-1', className)}
+      {...props}
+    >
       {children}
     </div>
   );
-};
+})
 
-const SelectContent: React.FC<SelectContentProps> = ({ className, children }) => {
+export const SelectItem = forwardRef<
+  HTMLOptionElement,
+  React.OptionHTMLAttributes<HTMLOptionElement>
+>(({ className, children, ...props }, ref) => {
   return (
-    <div className={className}>
-      {children}
-    </div>
-  );
-};
-
-const SelectItem: React.FC<SelectItemProps> = ({ value, children }) => {
-  return (
-    <option value={value}>
+    <option
+      ref={ref}
+      className={cn('cursor-default', className)}
+      {...props}
+    >
       {children}
     </option>
   );
-};
+})
 
-const SelectValue: React.FC<{placeholder?: string}> = ({ placeholder }) => {
-  return <span>{placeholder}</span>;
-};
+export const SelectValue = forwardRef<
+  HTMLSpanElement,
+  React.HTMLAttributes<HTMLSpanElement> & { placeholder?: string }
+>(({ placeholder, className, ...props }, ref) => {
+  return (
+    <span
+      ref={ref}
+      className={cn('block truncate', className)}
+      {...props}
+    >
+      {placeholder}
+    </span>
+  );
+})
 
-export {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue
-};
+Select.displayName = 'Select'
+SelectTrigger.displayName = 'SelectTrigger'
+SelectContent.displayName = 'SelectContent'
+SelectItem.displayName = 'SelectItem'
+SelectValue.displayName = 'SelectValue'
