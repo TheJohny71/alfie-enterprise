@@ -1,28 +1,39 @@
 import React from 'react';
 import { Alert } from '@/components/ui/alert';
 
-// Following required pattern from compliance docs
-const Select: React.FC<{
+export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   value: string;
   onValueChange: (value: string) => void;
+}
+
+export interface SelectTriggerProps {
   className?: string;
   children?: React.ReactNode;
-}> = ({ value, onValueChange, className, children }) => {
+}
+
+export interface SelectContentProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export interface SelectItemProps {
+  value: string;
+  children?: React.ReactNode;
+}
+
+const Select: React.FC<SelectProps> = ({ value, onValueChange, children, ...props }) => {
   return (
     <select 
       value={value}
       onChange={(e) => onValueChange(e.target.value)}
-      className={className}
+      {...props}
     >
       {children}
     </select>
   );
 };
 
-const SelectTrigger: React.FC<{
-  className?: string;
-  children?: React.ReactNode;
-}> = ({ className, children }) => {
+const SelectTrigger: React.FC<SelectTriggerProps> = ({ className, children }) => {
   return (
     <div className={className}>
       {children}
@@ -30,10 +41,7 @@ const SelectTrigger: React.FC<{
   );
 };
 
-const SelectContent: React.FC<{
-  className?: string;
-  children?: React.ReactNode;
-}> = ({ className, children }) => {
+const SelectContent: React.FC<SelectContentProps> = ({ className, children }) => {
   return (
     <div className={className}>
       {children}
@@ -41,10 +49,7 @@ const SelectContent: React.FC<{
   );
 };
 
-const SelectItem: React.FC<{
-  value: string;
-  children?: React.ReactNode;
-}> = ({ value, children }) => {
+const SelectItem: React.FC<SelectItemProps> = ({ value, children }) => {
   return (
     <option value={value}>
       {children}
@@ -52,9 +57,7 @@ const SelectItem: React.FC<{
   );
 };
 
-const SelectValue: React.FC<{
-  placeholder?: string;
-}> = ({ placeholder }) => {
+const SelectValue: React.FC<{placeholder?: string}> = ({ placeholder }) => {
   return <span>{placeholder}</span>;
 };
 
