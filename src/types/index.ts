@@ -9,3 +9,19 @@ export interface LoadingStateProps {
   color?: string;
   className?: string;
 }
+
+// Add Select related types
+export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  value: string;
+  onValueChange: (value: string) => void;
+}
+
+export interface SelectTriggerProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export interface SelectValueProps {
+  placeholder?: string;
+  className?: string;
+}
