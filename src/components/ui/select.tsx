@@ -2,8 +2,18 @@ import { forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  value: string;
-  onValueChange: (value: string) => void;
+  value: string
+  onValueChange: (value: string) => void
+}
+
+interface SelectTriggerProps {
+  className?: string
+  children?: React.ReactNode
+}
+
+interface SelectValueProps {
+  placeholder?: string
+  className?: string
 }
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
@@ -18,72 +28,37 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       >
         {children}
       </select>
-    );
+    )
   }
 )
 
-export const SelectTrigger = forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn('relative', className)}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-})
+export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
+  ({ className, children, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn('relative', className)}
+        {...props}
+      >
+        {children}
+      </div>
+    )
+  }
+)
 
-export const SelectContent = forwardRef<
-  HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement>
->(({ className, children, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn('absolute w-full mt-1', className)}
-      {...props}
-    >
-      {children}
-    </div>
-  );
-})
-
-export const SelectItem = forwardRef<
-  HTMLOptionElement,
-  React.OptionHTMLAttributes<HTMLOptionElement>
->(({ className, children, ...props }, ref) => {
-  return (
-    <option
-      ref={ref}
-      className={cn('cursor-default', className)}
-      {...props}
-    >
-      {children}
-    </option>
-  );
-})
-
-export const SelectValue = forwardRef<
-  HTMLSpanElement,
-  React.HTMLAttributes<HTMLSpanElement> & { placeholder?: string }
->(({ placeholder, className, ...props }, ref) => {
-  return (
-    <span
-      ref={ref}
-      className={cn('block truncate', className)}
-      {...props}
-    >
-      {placeholder}
-    </span>
-  );
-})
+export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(
+  ({ placeholder, className }, ref) => {
+    return (
+      <span
+        ref={ref}
+        className={cn('block truncate', className)}
+      >
+        {placeholder}
+      </span>
+    )
+  }
+)
 
 Select.displayName = 'Select'
 SelectTrigger.displayName = 'SelectTrigger'
-SelectContent.displayName = 'SelectContent'
-SelectItem.displayName = 'SelectItem'
 SelectValue.displayName = 'SelectValue'
