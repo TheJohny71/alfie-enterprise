@@ -1,147 +1,201 @@
-import React, { useState } from 'react';
-import { Calendar, Globe, Users, Clock } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Globe2, Calendar, Users } from 'lucide-react';
+import { 
+  Select, 
+  SelectContent, 
+  SelectItem, 
+  SelectTrigger, 
+  SelectValue 
+} from '@/components/ui/select';
 
-const WelcomePage: React.FC = () => {
-  // State for location preferences
-  const [selectedCity, setSelectedCity] = useState('Atlanta');
-  const [selectedCountry, setSelectedCountry] = useState('United States');
-
-  // Save preferences when changed
-  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const city = e.target.value;
-    setSelectedCity(city);
-    localStorage.setItem('preferredCity', city);
+const WelcomePage = () => {
+  // Enhanced location data structure with office information
+  const locationData = {
+    'United States': {
+      defaultCity: 'Atlanta',
+      cities: {
+        'Atlanta': { timeZone: 'America/New_York', officeCode: 'ATL' },
+        'Austin': { timeZone: 'America/Chicago', officeCode: 'AUS' },
+        'Boston': { timeZone: 'America/New_York', officeCode: 'BOS' },
+        'Chicago': { timeZone: 'America/Chicago', officeCode: 'CHI' },
+        'Dallas': { timeZone: 'America/Chicago', officeCode: 'DFW' },
+        'Houston': { timeZone: 'America/Chicago', officeCode: 'HOU' },
+        'Los Angeles': { timeZone: 'America/Los_Angeles', officeCode: 'LAX' },
+        'Miami': { timeZone: 'America/New_York', officeCode: 'MIA' },
+        'New York': { timeZone: 'America/New_York', officeCode: 'NYC' },
+        'Orange County': { timeZone: 'America/Los_Angeles', officeCode: 'OC' },
+        'San Francisco': { timeZone: 'America/Los_Angeles', officeCode: 'SF' },
+        'Silicon Valley': { timeZone: 'America/Los_Angeles', officeCode: 'SV' },
+        'Washington, DC': { timeZone: 'America/New_York', officeCode: 'DC' },
+        'Wilmington': { timeZone: 'America/New_York', officeCode: 'WIL' }
+      }
+    },
+    'United Kingdom': {
+      defaultCity: 'London City',
+      cities: {
+        'London City': { timeZone: 'Europe/London', officeCode: 'LON' }
+      }
+    }
   };
 
-  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const country = e.target.value;
+  const [selectedCountry, setSelectedCountry] = useState('United States');
+  const [selectedCity, setSelectedCity] = useState('Atlanta');
+  const [currentTime, setCurrentTime] = useState('');
+
+  // Initialize with browser's timezone if no defaults are set
+  useEffect(() => {
+    const initializeLocation = () => {
+      const savedCountry = localStorage.getItem('defaultCountry');
+      const savedCity = localStorage.getItem('defaultCity');
+
+      // Check if saved preferences exist and are valid
+      if (savedCountry && locationData[savedCountry]) {
+        setSelectedCountry(savedCountry);
+        if (savedCity && locationData[savedCountry].cities[savedCity]) {
+          setSelectedCity(savedCity);
+        } else {
+          // Use country's default city if saved city is invalid
+          setSelectedCity(locationData[savedCountry].defaultCity);
+        }
+      } else {
+        // Attempt to detect user's location based on browser timezone
+        const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        let matched = false;
+
+        // Find matching timezone in our office locations
+        Object.entries(locationData).forEach(([country, data]) => {
+          Object.entries(data.cities).forEach(([city, cityData]) => {
+            if (cityData.timeZone === userTimeZone && !matched) {
+              setSelectedCountry(country);
+              setSelectedCity(city);
+              matched = true;
+            }
+          });
+        });
+
+        // If no match, use system defaults
+        if (!matched) {
+          setSelectedCountry('United States');
+          setSelectedCity('Atlanta');
+        }
+      }
+    };
+
+    initializeLocation();
+  }, []);
+
+  // Update local time based on selected location
+  useEffect(() => {
+    const updateTime = () => {
+      const cityData = locationData[selectedCountry].cities[selectedCity];
+      const time = new Date().toLocaleTimeString('en-US', {
+        timeZone: cityData.timeZone,
+        hour: 'numeric',
+        minute: 'numeric'
+      });
+      setCurrentTime(time);
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 60000); // Update every minute
+
+    return () => clearInterval(interval);
+  }, [selectedCountry, selectedCity]);
+
+  const handleCountryChange = (country) => {
     setSelectedCountry(country);
-    localStorage.setItem('preferredCountry', country);
+    // Reset city to country's default when country changes
+    const defaultCity = locationData[country].defaultCity;
+    setSelectedCity(defaultCity);
+    
+    // Save preferences
+    localStorage.setItem('defaultCountry', country);
+    localStorage.setItem('defaultCity', defaultCity);
+  };
+
+  const handleCityChange = (city) => {
+    setSelectedCity(city);
+    localStorage.setItem('defaultCity', city);
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      {/* Header with slightly darker purple for distinction */}
-      <header className="h-16 bg-[#5D2D8C] border-b border-purple-400/20">
-        <div className="max-w-7xl h-full mx-auto px-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-2xl font-semibold text-white">
-              alfie
-            </span>
-            <span className="text-sm px-2 py-0.5 rounded border border-white/20 text-white">
-              Enterprise
-            </span>
-          </div>
+    <div className="min-h-screen bg-gradient-to-b from-purple-600 to-purple-800">
+      {/* Header */}
+      <header className="p-4 flex justify-between items-center">
+        <div className="flex items-center">
+          <span className="text-white text-2xl font-semibold">alfie</span>
+          <span className="text-white/80 ml-2">Enterprise</span>
+        </div>
+        
+        <div className="flex items-center gap-4">
+          <div className="text-white/80 text-sm mr-2">{currentTime}</div>
+          
+          <Select value={selectedCountry} onValueChange={handleCountryChange}>
+            <SelectTrigger className="w-40 bg-white/10 border-0 text-white">
+              <SelectValue placeholder="Select country" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(locationData).map((country) => (
+                <SelectItem key={country} value={country}>{country}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center gap-2 text-white">
-              <Clock className="w-4 h-4" />
-              <span>04:32 PM</span>
-            </div>
-            
-            {/* City Selector with full options */}
-            <select 
-              value={selectedCity}
-              onChange={handleCityChange}
-              className="bg-transparent border-0 text-white focus:ring-0 cursor-pointer appearance-none hover:text-white/80 pr-8"
-              style={{
-                backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right center',
-                backgroundSize: '16px'
-              }}
-            >
-              <option className="text-gray-900" value="Atlanta">Atlanta</option>
-              <option className="text-gray-900" value="Austin">Austin</option>
-              <option className="text-gray-900" value="Boston">Boston</option>
-              <option className="text-gray-900" value="Chicago">Chicago</option>
-              <option className="text-gray-900" value="Dallas">Dallas</option>
-              <option className="text-gray-900" value="Houston">Houston</option>
-              <option className="text-gray-900" value="Los Angeles">Los Angeles</option>
-              <option className="text-gray-900" value="Miami">Miami</option>
-              <option className="text-gray-900" value="New York">New York</option>
-              <option className="text-gray-900" value="Orange County">Orange County</option>
-              <option className="text-gray-900" value="San Francisco">San Francisco</option>
-              <option className="text-gray-900" value="Silicon Valley">Silicon Valley</option>
-              <option className="text-gray-900" value="Washington, DC">Washington, DC</option>
-              <option className="text-gray-900" value="Wilmington">Wilmington</option>
-            </select>
-
-            {/* Country Selector */}
-            <select 
-              value={selectedCountry}
-              onChange={handleCountryChange}
-              className="bg-transparent border-0 text-white focus:ring-0 cursor-pointer appearance-none hover:text-white/80 pr-8"
-              style={{
-                backgroundImage: 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'none\' viewBox=\'0 0 24 24\' stroke=\'white\'%3E%3Cpath stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M19 9l-7 7-7-7\'%3E%3C/path%3E%3C/svg%3E")',
-                backgroundRepeat: 'no-repeat',
-                backgroundPosition: 'right center',
-                backgroundSize: '16px'
-              }}
-            >
-              <option className="text-gray-900" value="United States">United States</option>
-              <option className="text-gray-900" value="United Kingdom">United Kingdom</option>
-            </select>
-          </div>
+          <Select value={selectedCity} onValueChange={handleCityChange}>
+            <SelectTrigger className="w-32 bg-white/10 border-0 text-white">
+              <SelectValue placeholder="Select city" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(locationData[selectedCountry].cities).map((city) => (
+                <SelectItem key={city} value={city}>{city}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="flex-1 bg-[#663399] flex flex-col items-center justify-center px-6">
-        <div className="text-center">
-          <h1 className="text-4xl font-semibold text-white mb-4">
-            Create moments for what matters
-          </h1>
-          <h2 className="text-2xl text-white/90 mb-4">
-            Life's best stories happen off the clock
-          </h2>
-          <p className="text-lg text-white/80 mb-8">
-            Plan smarter. Live fuller.
-          </p>
-          
-          {/* Styled Get Started Button */}
-          <button className="px-6 py-2.5 bg-white rounded-md font-medium text-[#663399] 
-            hover:bg-white/90 transition-colors duration-200">
-            Get Started
-          </button>
-        </div>
+      {/* Hero Section */}
+      <main className="max-w-6xl mx-auto px-4 pt-24 pb-16 text-center">
+        <h1 className="text-5xl font-semibold text-white mb-6 tracking-tight">
+          Create moments for what matters
+        </h1>
+        <p className="text-2xl text-white/90 mb-4">
+          Life's best stories happen off the clock
+        </p>
+        <p className="text-lg text-white/80 mb-8">
+          Plan smarter. Live fuller.
+        </p>
+        <button className="px-6 py-3 bg-white text-purple-700 rounded-lg font-medium 
+                         transform transition-all duration-200 hover:scale-105 
+                         hover:shadow-lg active:scale-95">
+          Get Started
+        </button>
       </main>
 
       {/* Feature Cards */}
-      <div className="w-full bg-gray-50 px-6 py-8">
-        <div className="max-w-7xl mx-auto grid grid-cols-3 gap-8">
-          {[
-            {
-              icon: Calendar,
-              title: "Smart Calendar",
-              description: "Intelligent planning that puts your time first"
-            },
-            {
-              icon: Globe,
-              title: "Region Aware",
-              description: "Seamlessly adapts to your location and policies"
-            },
-            {
-              icon: Users,
-              title: "Team Sync",
-              description: "Keep your team aligned while you're away"
-            }
-          ].map((feature, index) => (
-            <div 
-              key={index}
-              className="bg-white rounded-xl p-6 shadow-sm"
-            >
-              <div className="w-12 h-12 bg-purple-100/50 rounded-lg flex items-center justify-center mb-4">
-                <feature.icon className="w-6 h-6 text-[#663399]" />
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600">
-                {feature.description}
-              </p>
-            </div>
-          ))}
+      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6 pb-16">
+        <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 transform transition-all duration-200 hover:scale-105">
+          <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+            <Calendar className="w-6 h-6 text-white" />
+          </div>
+          <h3 className="text-xl font-semibold text-white mb-2">Smart Calendar</h3>
+          <p className="text-white/80">Intelligent planning that puts your time first</p>
+        </div>
+
+        <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 transform transition-all duration-200 hover:scale-105">
+          <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+            <Globe2 className="w-6 h-6 text-white" />
+          </div>
+          <h3 className="text-xl font-semibold text-white mb-2">Region Aware</h3>
+          <p className="text-white/80">Seamlessly adapts to your location and policies</p>
+        </div>
+
+        <div className="bg-white/10 backdrop-blur-lg rounded-xl p-6 transform transition-all duration-200 hover:scale-105">
+          <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4">
+            <Users className="w-6 h-6 text-white" />
+          </div>
+          <h3 className="text-xl font-semibold text-white mb-2">Team Sync</h3>
+          <p className="text-white/80">Keep your team aligned while you're away</p>
         </div>
       </div>
     </div>
