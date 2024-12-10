@@ -1,20 +1,6 @@
-import { forwardRef } from 'react'
-import { cn } from '@/lib/utils'
-
-interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  value: string
-  onValueChange: (value: string) => void
-}
-
-interface SelectTriggerProps {
-  className?: string
-  children?: React.ReactNode
-}
-
-interface SelectValueProps {
-  placeholder?: string
-  className?: string
-}
+import { forwardRef } from 'react';
+import { cn } from '@/lib/utils';
+import { SelectProps, SelectTriggerProps, SelectValueProps } from '@/types';
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ value, onValueChange, children, className, ...props }, ref) => {
@@ -28,9 +14,9 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       >
         {children}
       </select>
-    )
+    );
   }
-)
+);
 
 export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
   ({ className, children, ...props }, ref) => {
@@ -42,9 +28,9 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
       >
         {children}
       </div>
-    )
+    );
   }
-)
+);
 
 export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(
   ({ placeholder, className }, ref) => {
@@ -55,10 +41,10 @@ export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(
       >
         {placeholder}
       </span>
-    )
+    );
   }
-)
+);
 
-Select.displayName = 'Select'
-SelectTrigger.displayName = 'SelectTrigger'
-SelectValue.displayName = 'SelectValue'
+Select.displayName = 'Select';
+SelectTrigger.displayName = 'SelectTrigger';
+SelectValue.displayName = 'SelectValue';
