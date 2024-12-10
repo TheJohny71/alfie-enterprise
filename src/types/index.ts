@@ -1,10 +1,11 @@
 import { LucideIcon } from 'lucide-react';
+import { VariantProps } from 'class-variance-authority';
+import { buttonVariants } from '@/components/ui/Button';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'sm' | 'md' | 'lg';
-  children: React.ReactNode;
-}
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+  };
 
 export interface LoadingStateProps {
   size?: 'sm' | 'md' | 'lg';
@@ -12,7 +13,6 @@ export interface LoadingStateProps {
   className?: string;
 }
 
-// Select related types
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   value: string;
   onValueChange: (value: string) => void;
@@ -28,7 +28,6 @@ export interface SelectValueProps {
   className?: string;
 }
 
-// WelcomePage related types
 export interface WelcomePageProps {
   className?: string;
 }
@@ -48,8 +47,4 @@ export interface RegionOption {
 export interface LocationOption {
   value: string;
   label: string;
-}
-
-export interface HeaderProps {
-  className?: string;
 }
