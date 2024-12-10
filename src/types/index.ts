@@ -1,3 +1,5 @@
+import { LucideIcon } from 'lucide-react';
+
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'tertiary';
   size?: 'sm' | 'md' | 'lg';
@@ -10,7 +12,7 @@ export interface LoadingStateProps {
   className?: string;
 }
 
-// Add Select related types
+// Select related types
 export interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   value: string;
   onValueChange: (value: string) => void;
@@ -23,5 +25,31 @@ export interface SelectTriggerProps {
 
 export interface SelectValueProps {
   placeholder?: string;
+  className?: string;
+}
+
+// WelcomePage related types
+export interface WelcomePageProps {
+  className?: string;
+}
+
+export interface FeatureCardProps {
+  Icon: LucideIcon;
+  title: string;
+  description: string;
+  ariaLabel: string;
+}
+
+export interface RegionOption {
+  value: string;
+  label: string;
+}
+
+export interface LocationOption {
+  value: string;
+  label: string;
+}
+
+export interface HeaderProps {
   className?: string;
 }
