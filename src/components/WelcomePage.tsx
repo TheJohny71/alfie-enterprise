@@ -1,22 +1,29 @@
 import React from 'react';
 import { Globe2, Calendar, Users } from 'lucide-react';
-import { 
-  Select, 
-  SelectTrigger, 
-  SelectValue 
-} from '@/components/ui/Select';
+import { Select, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Button from '@/components/ui/Button';
 
-// Following pattern from compliance docs
+// Define type for country data
+type CountryData = {
+  defaultCity: string;
+  cities: Record<string, {
+    timeZone: string;
+    officeCode: string;
+  }>;
+};
+
+// Define type for location data
+type LocationData = Record<string, CountryData>;
+
 const WelcomePage: React.FC = () => {
-  const [selectedCountry, setSelectedCountry] = React.useState('United States');
-  const [selectedCity, setSelectedCity] = React.useState('Atlanta');
-  const [currentTime, setCurrentTime] = React.useState('');
-
-  const locationData = {
+  // Location data with proper TypeScript types
+  const locationData: LocationData = {
     'United States': {
       defaultCity: 'Atlanta',
       cities: {
-        'Atlanta': { timeZone: 'America/New_York', officeCode: 'ATL' }
+        'Atlanta': { timeZone: 'America/New_York', officeCode: 'ATL' },
+        'Austin': { timeZone: 'America/Chicago', officeCode: 'AUS' },
+        'Boston': { timeZone: 'America/New_York', officeCode: 'BOS' }
       }
     },
     'United Kingdom': {
@@ -25,16 +32,22 @@ const WelcomePage: React.FC = () => {
         'London': { timeZone: 'Europe/London', officeCode: 'LON' }
       }
     }
-  } as const;
+  };
 
-  const handleCountryChange = React.useCallback((value: string) => {
-    setSelectedCountry(value);
-    const defaultCity = locationData[value as keyof typeof locationData].defaultCity;
-    setSelectedCity(defaultCity);
+  const [selectedCountry, setSelectedCountry] = React.useState<keyof LocationData>('United States');
+  const [selectedCity, setSelectedCity] = React.useState('Atlanta');
+  const [currentTime, setCurrentTime] = React.useState('');
+
+  const handleCountryChange = React.useCallback((country: string) => {
+    if (country in locationData) {
+      setSelectedCountry(country as keyof LocationData);
+      const defaultCity = locationData[country].defaultCity;
+      setSelectedCity(defaultCity);
+    }
   }, []);
 
-  const handleCityChange = React.useCallback((value: string) => {
-    setSelectedCity(value);
+  const handleCityChange = React.useCallback((city: string) => {
+    setSelectedCity(city);
   }, []);
 
   return (
@@ -56,7 +69,7 @@ const WelcomePage: React.FC = () => {
               <SelectTrigger className="w-32">
                 <SelectValue placeholder="Select city" />
               </SelectTrigger>
-              {Object.keys(locationData[selectedCountry as keyof typeof locationData].cities).map((city) => (
+              {Object.keys(locationData[selectedCountry].cities).map((city) => (
                 <option key={city} value={city}>{city}</option>
               ))}
             </Select>
