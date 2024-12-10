@@ -1,6 +1,21 @@
 import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
-import { SelectProps, SelectTriggerProps, SelectValueProps } from '@/types';
+
+// Define interfaces directly in the file instead of importing
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
+  value: string;
+  onValueChange: (value: string) => void;
+}
+
+interface SelectTriggerProps extends React.HTMLAttributes<HTMLDivElement> {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+interface SelectValueProps extends React.HTMLAttributes<HTMLSpanElement> {
+  placeholder?: string;
+  className?: string;
+}
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ value, onValueChange, children, className, ...props }, ref) => {
@@ -33,11 +48,12 @@ export const SelectTrigger = forwardRef<HTMLDivElement, SelectTriggerProps>(
 );
 
 export const SelectValue = forwardRef<HTMLSpanElement, SelectValueProps>(
-  ({ placeholder, className }, ref) => {
+  ({ placeholder, className, ...props }, ref) => {
     return (
       <span
         ref={ref}
         className={cn('block truncate', className)}
+        {...props}
       >
         {placeholder}
       </span>
