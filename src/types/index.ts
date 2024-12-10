@@ -1,11 +1,13 @@
 import { LucideIcon } from 'lucide-react';
-import { VariantProps } from 'class-variance-authority';
-import { buttonVariants } from '@/components/ui/Button';
+import type { VariantProps } from 'class-variance-authority';
+import type { buttonVariants } from '@/components/ui/Button';
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-  };
+export type ButtonVariants = VariantProps<typeof buttonVariants>;
+
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  ButtonVariants {
+  asChild?: boolean;
+}
 
 export interface LoadingStateProps {
   size?: 'sm' | 'md' | 'lg';
