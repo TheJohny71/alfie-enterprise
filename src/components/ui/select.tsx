@@ -1,73 +1,67 @@
 import React from 'react';
-import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronDown } from "lucide-react";
-import { cn } from '@/lib/utils';
+import { Alert } from '@/components/ui/alert';
 
-const Select = SelectPrimitive.Root;
-const SelectGroup = SelectPrimitive.Group;
-const SelectValue = SelectPrimitive.Value;
-
-// Following required React.FC pattern
-const SelectTrigger: React.FC<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>> = React.forwardRef(({ 
-  className, 
-  children, 
-  ...props 
-}, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn("flex h-10 w-full items-center justify-between rounded-md px-3 py-2 text-sm", className)}
-    {...props}
-  >
-    {children}
-    <ChevronDown className="h-4 w-4" />
-  </SelectPrimitive.Trigger>
-));
-SelectTrigger.displayName = "SelectTrigger";
-
-const SelectContent: React.FC<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>> = React.forwardRef(({ 
-  className, 
-  children,
-  ...props 
-}, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn("bg-white dark:bg-gray-800 rounded-md border shadow-lg", className)}
-      {...props}
+// Following required pattern from compliance docs
+const Select: React.FC<{
+  value: string;
+  onValueChange: (value: string) => void;
+  className?: string;
+  children?: React.ReactNode;
+}> = ({ value, onValueChange, className, children }) => {
+  return (
+    <select 
+      value={value}
+      onChange={(e) => onValueChange(e.target.value)}
+      className={className}
     >
-      <SelectPrimitive.Viewport className="p-2">
-        {children}
-      </SelectPrimitive.Viewport>
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
-SelectContent.displayName = "SelectContent";
+      {children}
+    </select>
+  );
+};
 
-const SelectItem: React.FC<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>> = React.forwardRef(({ 
-  className, 
-  children, 
-  ...props 
-}, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn("relative flex items-center px-8 py-2 text-sm cursor-default", className)}
-    {...props}
-  >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-));
-SelectItem.displayName = "SelectItem";
+const SelectTrigger: React.FC<{
+  className?: string;
+  children?: React.ReactNode;
+}> = ({ className, children }) => {
+  return (
+    <div className={className}>
+      {children}
+    </div>
+  );
+};
+
+const SelectContent: React.FC<{
+  className?: string;
+  children?: React.ReactNode;
+}> = ({ className, children }) => {
+  return (
+    <div className={className}>
+      {children}
+    </div>
+  );
+};
+
+const SelectItem: React.FC<{
+  value: string;
+  children?: React.ReactNode;
+}> = ({ value, children }) => {
+  return (
+    <option value={value}>
+      {children}
+    </option>
+  );
+};
+
+const SelectValue: React.FC<{
+  placeholder?: string;
+}> = ({ placeholder }) => {
+  return <span>{placeholder}</span>;
+};
 
 export {
   Select,
-  SelectGroup,
-  SelectValue,
   SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectValue
 };
