@@ -11,32 +11,27 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      # Step 1: Check out the repository
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js environment
+      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
 
-      # Step 3: Install dependencies and regenerate lock file if necessary
-      - name: Install Dependencies and Regenerate Lock File
+      # Step 3: Regenerate the lock file (force `package-lock.json` creation)
+      - name: Force regenerate package-lock.json
         run: |
-          if [ ! -f package-lock.json ]; then
-            echo "Lock file not found. Running npm install to regenerate it."
-            npm install
-            git config user.name "GitHub Actions"
-            git config user.email "actions@github.com"
-            git add package-lock.json
-            git commit -m "Regenerate package-lock.json" || true
-            git push || true
-          else
-            echo "Lock file found. Proceeding with npm ci."
-            npm ci
-          fi
+          rm -f package-lock.json # Ensure any corrupted or old lock files are removed
+          npm install
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add package-lock.json
+          git commit -m "Regenerate package-lock.json" || true
+          git push || true
 
       # Step 4: Build the project
       - name: Build Project
