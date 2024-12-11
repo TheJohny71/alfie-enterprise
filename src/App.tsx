@@ -1,5 +1,8 @@
-import WelcomePage from './components/WelcomePage'
+import React from 'react';
+import WelcomePage from '@/components/WelcomePage';
 
-export default function App() {
+const App: React.FC = () => {
   return <WelcomePage />;
-}
+};
+
+export default App;
