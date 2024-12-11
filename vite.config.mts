@@ -9,17 +9,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/alfie-enterprise/',
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-    rollupOptions: {
-      external: ['lucide-react'],
-      output: {
-        globals: {
-          'lucide-react': 'lucide-react',
-        },
-      },
-    },
-  },
 });
