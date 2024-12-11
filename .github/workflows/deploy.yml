@@ -20,16 +20,12 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Clean install dependencies
+      - name: Install dependencies
         run: |
-          echo "Installing dependencies..."
-          rm -rf node_modules
-          rm -f package-lock.json
-          npm install
-
+          npm ci
+          
       - name: Build
         run: |
-          echo "Building project..."
           npm run build
         env:
           CI: false
@@ -41,3 +37,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           force_orphan: true
+          enable_jekyll: false
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy to GitHub Pages'
