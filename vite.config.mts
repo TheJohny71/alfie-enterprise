@@ -6,18 +6,18 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src')
+      '@': path.resolve(__dirname, './src'),
     }
   },
-  base: '/alfie-enterprise/',
+  base: '/alfie-enterprise/',  // Must match your repository name
   build: {
     outDir: 'dist',
     sourcemap: true,
+    assetsDir: 'assets',
     rollupOptions: {
-      external: ['lucide-react'],  // Add lucide-react as external
       output: {
-        globals: {
-          'lucide-react': 'lucide-react'
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'lucide-react']
         }
       }
     }
