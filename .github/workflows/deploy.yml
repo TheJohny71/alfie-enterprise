@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
 
 permissions:
   contents: write
@@ -10,43 +10,28 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
+          node-version: 20
+          cache: 'npm'
 
-      # Step 3: Debugging and Environment Info
-      - name: Display Environment Info
+      - name: Install dependencies
         run: |
-          node -v
-          npm -v
-          ls -al
-          npm config list
+          npm ci
 
-      # Step 4: Install Dependencies and Generate Lock File
-      - name: Install dependencies and create package-lock.json
+      - name: Build project
         run: |
-          npm install --legacy-peer-deps
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add package-lock.json || true
-          git commit -m "Add package-lock.json" || true
-          git push || true
+          npm run build
 
-      # Step 5: Build the Project
-      - name: Build Project
-        run: npm run build
-
-      # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          force_orphan: true
