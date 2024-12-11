@@ -3,10 +3,28 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: #F5F5F7;
+    --primary: #5E5CE6;
+  }
+
   body {
-    @apply antialiased text-gray-300;
+    @apply bg-background text-gray-900 antialiased;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-semibold;
-  }
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display'),
+       local('SFProDisplay-Regular');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display Bold'),
+       local('SFProDisplay-Bold');
+  font-weight: bold;
+  font-style: normal;
 }
