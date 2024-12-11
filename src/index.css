@@ -4,8 +4,7 @@
 
 @layer base {
   :root {
-    --background: #F5F5F7;
-    --primary: #5E5CE6;
+    --background: #F5F5F7; /* Matches the theme background color */
   }
 
   body {
