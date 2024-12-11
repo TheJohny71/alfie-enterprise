@@ -22,15 +22,21 @@ jobs:
           node-version: 18
           cache: npm
 
-      # Step 3: Install dependencies
-      - name: Install Dependencies
+      # Step 3: Install dependencies and regenerate lock file if necessary
+      - name: Install Dependencies and Regenerate Lock File
         run: |
-          npm install
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add package-lock.json || true
-          git commit -m "Regenerate package-lock.json" || true
-          git push || true
+          if [ ! -f package-lock.json ]; then
+            echo "Lock file not found. Running npm install to regenerate it."
+            npm install
+            git config user.name "GitHub Actions"
+            git config user.email "actions@github.com"
+            git add package-lock.json
+            git commit -m "Regenerate package-lock.json" || true
+            git push || true
+          else
+            echo "Lock file found. Proceeding with npm ci."
+            npm ci
+          fi
 
       # Step 4: Build the project
       - name: Build Project
