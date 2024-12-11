@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     sourcemap: true,
     rollupOptions: {
-      external: ['lucide-react'], // Ensure externalization of lucide-react
+      external: ['lucide-react', 'framer-motion'], // Externalize dependencies
     },
   },
 });
