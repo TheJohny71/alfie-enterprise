@@ -22,22 +22,25 @@ jobs:
           node-version: 18
           cache: npm
 
-      # Step 3: Regenerate the lock file (force `package-lock.json` creation)
-      - name: Force regenerate package-lock.json
+      # Step 3: Clear npm cache (Temporary for Debugging)
+      - name: Clear npm cache
+        run: npm cache clean --force
+
+      # Step 4: Install dependencies and generate lock file
+      - name: Install dependencies and create lock file
         run: |
-          rm -f package-lock.json
-          npm install
+          npm install --legacy-peer-deps
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add package-lock.json
-          git commit -m "Regenerate package-lock.json" || true
+          git add package-lock.json || true
+          git commit -m "Generate package-lock.json" || true
           git push || true
 
-      # Step 4: Build the project
+      # Step 5: Build the project
       - name: Build Project
         run: npm run build
 
-      # Step 5: Deploy to GitHub Pages
+      # Step 6: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
