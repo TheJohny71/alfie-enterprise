@@ -11,7 +11,11 @@ export default defineConfig({
     },
   },
   build: {
+    outDir: 'dist',
     sourcemap: true,
-    target: 'esnext',
   },
+  server: {
+    port: 3000,
+    host: true
+  }
 });
