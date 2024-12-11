@@ -9,9 +9,10 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-  base: '/alfie-enterprise/', // Ensure the base path matches your repository name
   build: {
-    outDir: 'dist',
     sourcemap: true,
+    rollupOptions: {
+      external: ['lucide-react'], // Externalize lucide-react for Rollup
+    },
   },
 });
