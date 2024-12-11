@@ -1,14 +1,11 @@
-name: Deploy
+name: Regenerate Lock File and Deploy
 
 on:
   push:
     branches: [main]
 
-permissions:
-  contents: write
-
 jobs:
-  deploy:
+  regenerate-lock-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,10 +15,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: npm
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Install and Regenerate Lock File
+        run: |
+          npm install
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add package-lock.json
+          git commit -m "Regenerate package-lock.json"
+          git push
 
       - name: Build Project
         run: npm run build
