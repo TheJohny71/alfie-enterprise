@@ -7,19 +7,19 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-    }
+    },
   },
-  base: '/alfie-enterprise/',  // Must match your repository name
+  base: '/alfie-enterprise/',
   build: {
     outDir: 'dist',
     sourcemap: true,
-    assetsDir: 'assets',
     rollupOptions: {
+      external: ['lucide-react'],
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'lucide-react']
-        }
-      }
-    }
-  }
+        globals: {
+          'lucide-react': 'lucide-react',
+        },
+      },
+    },
+  },
 });
