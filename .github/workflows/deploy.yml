@@ -1,12 +1,3 @@
-- name: Install Dependencies and Regenerate Lock File
-  run: |
-    npm install
-    git config user.name "GitHub Actions"
-    git config user.email "actions@github.com"
-    git add package-lock.json
-    git commit -m "Regenerate package-lock.json"
-    git push
-
 name: Deploy
 
 on:
@@ -20,21 +11,32 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      # Step 1: Check out the repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Step 2: Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: npm
 
-      - name: Install Dependencies
-        run: npm ci
+      # Step 3: Install dependencies and regenerate lock file
+      - name: Install Dependencies and Regenerate Lock File
+        run: |
+          npm install
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add package-lock.json
+          git commit -m "Regenerate package-lock.json"
+          git push
 
+      # Step 4: Build the project
       - name: Build Project
-        run: npm run build -- --debug
+        run: npm run build
 
+      # Step 5: Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
