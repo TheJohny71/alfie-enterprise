@@ -6,13 +6,17 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+      '@': path.resolve(__dirname, './src')
+    }
   },
+  base: '/alfie-enterprise/', // Update this based on your GitHub Pages path
   build: {
+    outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      external: ['lucide-react', 'framer-motion'], // Externalize dependencies
-    },
-  },
+      output: {
+        globals: {}
+      }
+    }
+  }
 });
