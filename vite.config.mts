@@ -3,19 +3,11 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  base: '/alfie-enterprise/',
-  plugins: [react()],
+  base: '/alfie-enterprise/',  // Match your repository name
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-  },
-  server: {
-    port: 3000,
-    host: true
-  }
+  plugins: [react()],
 });
