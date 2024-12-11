@@ -22,21 +22,25 @@ jobs:
           node-version: 18
           cache: npm
 
-      # Step 3: Clear npm cache (Temporary for Debugging)
-      - name: Clear npm cache
-        run: npm cache clean --force
+      # Step 3: Debugging and Environment Info
+      - name: Display Environment Info
+        run: |
+          node -v
+          npm -v
+          ls -al
+          npm config list
 
-      # Step 4: Install dependencies and generate lock file
-      - name: Install dependencies and create lock file
+      # Step 4: Install Dependencies and Generate Lock File
+      - name: Install dependencies and create package-lock.json
         run: |
           npm install --legacy-peer-deps
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add package-lock.json || true
-          git commit -m "Generate package-lock.json" || true
+          git commit -m "Add package-lock.json" || true
           git push || true
 
-      # Step 5: Build the project
+      # Step 5: Build the Project
       - name: Build Project
         run: npm run build
 
