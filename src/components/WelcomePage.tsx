@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-// Add any props or functionality your WelcomePage may need
 const WelcomePage = () => {
   return (
     <motion.div
