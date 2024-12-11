@@ -1,4 +1,3 @@
-// vite.config.mts - Complete Updated File
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -15,13 +14,12 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      external: [], // Explicitly define any external dependencies
+      external: ['lucide-react'],  // Add lucide-react as external
       output: {
-        manualChunks: undefined // Disable manual chunk splitting
+        globals: {
+          'lucide-react': 'lucide-react'
+        }
       }
     }
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom'] // Include core dependencies
   }
 });
